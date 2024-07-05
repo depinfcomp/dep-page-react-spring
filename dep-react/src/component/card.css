@@ -1,0 +1,88 @@
+.card {
+  background: rgb(18, 175, 254);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.654);
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center the content */
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.75s ease-in-out;
+
+  /* Adjust margins to avoid overflow */
+  margin: 10px; /* General margin to avoid overlap */
+
+  /* Adjust the size of the card */
+  width: 300px; /* Specify the width of the card */
+  height: 200px; /* Specify the height of the card */
+  /* Configuration comment: Adjust the width and height of the card here */
+}
+
+.card:hover {
+  background: rgb(200, 225, 255);
+  box-shadow: 0 0 50px rgb(0, 0, 0);
+}
+
+.card_logo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  border: 7px peachpuff solid;
+  transition: all 0.5s ease-out;
+}
+
+.card_data {
+  color: white;
+  transition: all 0.5s;
+}
+
+.card:hover > .card_data {
+  color: indigo;
+  transform: translateX(-45%) scale(1.1);
+}
+
+.card:hover > .card_data p {
+  display: none;
+}
+
+.card:hover > .card_logo img {
+  border-radius: 50%;
+  transform: translateX(270%) scale(1.8);
+}
+
+.search-bar-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 400px; /* Adjust the maximum width as needed */
+}
+
+.email-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem; /* Add bottom margin */
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.email-icon i {
+  margin-right: 5px;
+}
+
+.email-icon:hover {
+  color: #41101f;
+  transform: scale(1.1);
+}
+
+.transition-all {
+  transition: all 0.5s ease-in-out;
+}

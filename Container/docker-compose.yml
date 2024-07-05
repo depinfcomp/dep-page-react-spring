@@ -1,0 +1,63 @@
+services:
+  react_app:
+    container_name: react_app
+    build:
+      context: ../dep-react
+      dockerfile: Dockerfile
+    ports:
+      - "80:5173"
+    depends_on:
+      - java_app
+    volumes:
+      - ../dep-reactV2:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: bash -c "npm install && npm run dev"
+
+  java_app:
+    container_name: java_app
+    build:
+      context: .
+    ports:
+      - "8092:8092"
+    environment:
+      - DATABASE_URL=jdbc:mysql://java_db:3306/departamentoinformatica
+      - DATABASE_USERNAME=julian519
+      - DATABASE_PASSWORD=aelita607
+    depends_on:
+      - phpmyadmin
+    volumes:
+      - java_app_data:/path/to/data/in/container
+
+  java_db:
+    container_name: java_db
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Black607@
+      MYSQL_DATABASE: departamentoinformatica
+      MYSQL_USER: julian519
+      MYSQL_PASSWORD: aelita607
+    volumes:
+      - java_db_data:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: java_db # Nombre del servicio de la base de datos
+      MYSQL_ROOT_PASSWORD: treno
+    depends_on:
+      - java_db
+    volumes:
+      - phpmyadmin_data:/sessions
+
+volumes:
+  node_modules:
+  java_app_data:
+  java_db_data:
+  phpmyadmin_data:

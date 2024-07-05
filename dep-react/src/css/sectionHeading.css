@@ -1,0 +1,51 @@
+:root {
+  --azul-oscuro: #0b2e59;
+  --azul: #13477c;
+  --azul-semiclaro: #0c6896;
+  --azul-claro: #0c6896;
+  --verde: #7ab317;
+  --amarillo: #ecb01b;
+  --naranja: #d74b0a;
+  --morado: #2a044a;
+  --gris-oscuro: #032750;
+  --gris: #7c7c7c;
+  --gris-claro: #146c95;
+  --blanco: #ffffff;
+  --negro: #000000;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-family: "Ancizar", sans-serif;
+}
+.fcen-section-heading {
+  margin-top: 10px;
+  color: var(--gris-oscuro);
+  display: flex;
+  justify-content: center;
+}
+.fcen-section-heading-color-F1 {
+  margin: 0em auto;
+  color: var(--negro);
+  background-color: var(--gris-claro);
+  border-bottom: 4px solid var(--verde);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140px;
+  margin-bottom: 40px;
+  /* Added styles for full width */
+  width: 100vw; /* Sets width to 100% of viewport width */
+  box-sizing: border-box; /* Ensures padding and border don't affect width */
+}
+.fcen-section-heading p {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  max-width: 50%;
+  border-bottom: 4px solid var(--verde);
+  margin: 1em;
+  padding: 0.3em;
+  font-weight: bold;
+  line-height: 1;
+}

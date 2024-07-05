@@ -1,0 +1,18 @@
+/* style submenu */
+.dropdown-submenu:hover .dropdown-menu {
+    display: block;
+}
+
+/* Estilo para los submenús de la derecha */
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    display: none;
+    margin-top: -1px;
+    border-radius: 0;
+}

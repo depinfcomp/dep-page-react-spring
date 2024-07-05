@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'Ancizar';
+    src: url('https://fcen.unal.edu.co/fileadmin/typography/Ancizar_Sans-Regular.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ancizar-serif';
+    src: url('https://fcen.unal.edu.co/fileadmin/typography/Ancizar_Serif-Bold_Italic.otf') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+:root {
+    --azul-oscuro: #0B2E59;
+    --azul: #13477C;
+    --azul-semiclaro: #0C6896;
+    --azul-claro: #0C6896;
+    --verde: #7AB317;
+    --amarillo: #ECB01B;
+    --naranja: #D74B0A;
+    --morado: #2A044A;
+    --gris-oscuro: #2D2D2D;
+    --gris: #7C7C7C;
+    --gris-claro: #cecece;
+    --blanco: #ffffff;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-family: 'Ancizar', sans-serif;
+}
+
+
+.fcen-section-nav-color {
+    background-color: #114c5f;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 70px;
+    padding: 1em;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.fcen-nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--verde);
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    width: 200px;
+    /* Esto hará que cada fcen-nav-item ocupe un cuarto del ancho del padre */
+    text-align: center;
+    font-size: 16px;
+    transition: 300ms ease;
+    /* Añadido para centrar el texto dentro de cada elemento */
+}
+
+.fcen-nav-item:hover {
+    background-color: var(--azul);
+    transition: 300ms ease;
+}
+
+.fcen-nav-item p {
+    font-size: 18px;
+}
+
+@media screen and (max-width: 700px) {
+    .fcen-section-nav-color {
+        flex-direction: column;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+    }
+}
