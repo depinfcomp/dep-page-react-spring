@@ -9,7 +9,7 @@ services:
     depends_on:
       - java_app
     volumes:
-      - ../dep-reactV2:/usr/src/app
+      - ../dep-react:/usr/src/app
       - node_modules:/usr/src/app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
