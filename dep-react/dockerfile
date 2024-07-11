@@ -4,21 +4,21 @@ FROM node:20.12.2
 # Crear y establecer el directorio de trabajo en el contenedor
 WORKDIR /usr/src/app
 
-# Copiar los archivos de la aplicación
+# Copiar los archivos de la aplicaci  n
 COPY package.json .
 COPY package-lock.json .
 
 # Instalar las dependencias
-RUN npm install
+RUN npm install --legacy-peer-deps
 RUN npm install vite -g
 
-# Copiar el resto de los archivos de la aplicación
+# Copiar el resto de los archivos de la aplicaci  n
 COPY . .
 
 # Exponer el puerto usado por Vite
 EXPOSE 5173
 
-# Comando por defecto para ejecutar la aplicación en modo desarrollo
+# Comando para iniciar la aplicaci  n
 CMD ["npm", "run", "dev"]
 
 #RUN node server.js
