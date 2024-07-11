@@ -26,7 +26,7 @@ services:
       - DATABASE_USERNAME=julian519
       - DATABASE_PASSWORD=aelita607
     depends_on:
-      - phpmyadmin
+      - java_db
     volumes:
       - java_app_data:/path/to/data/in/container
 
@@ -42,19 +42,6 @@ services:
       MYSQL_PASSWORD: aelita607
     volumes:
       - java_db_data:/var/lib/mysql
-
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8081:80"
-    environment:
-      PMA_HOST: java_db # Nombre del servicio de la base de datos
-      MYSQL_ROOT_PASSWORD: treno
-    depends_on:
-      - java_db
-    volumes:
-      - phpmyadmin_data:/sessions
 
 volumes:
   node_modules:
