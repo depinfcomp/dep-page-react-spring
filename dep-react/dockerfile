@@ -21,4 +21,4 @@ EXPOSE 5173
 # Comando para iniciar la aplicaci  n
 CMD ["npm", "run", "dev"]
 
-#RUN node server.js
+RUN node server.js
