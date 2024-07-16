@@ -3,7 +3,6 @@ import "./card.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SearchBarComponent from "./SearchBarComponent";
-// import ExternalSiteViewer from "./ExternalSiteViewer";
 import { Container, Grid, Box, Modal, Typography, Button, Paper } from "@mui/material";
 import { base } from "../api";
 
@@ -63,9 +62,10 @@ const Docentes = () => {
 
   const filteredCards = sortedCards.filter(
     (card) =>
-      !card.posicion &&
+      (card.posicion === "Docente" || !card.posicion) &&
       card.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
 
   const rows = [];
   for (let i = 0; i < filteredCards.length; i += 4) {
@@ -109,7 +109,7 @@ const Docentes = () => {
               >
                 <CardCustom
                   title={card.nombre}
-                  text={card.posicion}
+                  text={"-"}
                   url={card.cvlac}
                   email={card.correo}
                   onViewCurriculum={() => handleOpen(card.cvlac, card.nombre)}
@@ -194,9 +194,11 @@ const Administrativos = () => {
 
   const filteredCards = sortedCards.filter(
     (card) =>
-      card.posicion &&
+      card.posicion !== "Docente" &&
+      card.posicion != null &&
       card.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
 
   const rows = [];
   for (let i = 0; i < filteredCards.length; i += 4) {

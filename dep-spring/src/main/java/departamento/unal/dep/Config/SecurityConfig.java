@@ -10,7 +10,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//import departamento.unal.dep.Entity.NoticiasEventos;
 import departamento.unal.dep.jwt.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/modeloPermisos/noAuth/**").permitAll() 
                         .requestMatchers(HttpMethod.GET, "/api/NoticiasEventos/noAuth/**").permitAll() 
                         .requestMatchers(HttpMethod.GET, "/api/permisos/noAuth/**").permitAll() 
-                        .requestMatchers(HttpMethod.GET, "/api/enlacesInteres/noAuth/**").permitAll()          
+                        .requestMatchers(HttpMethod.GET, "/api/enlacesInteres/noAuth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/upload/**").permitAll()
                         .requestMatchers("/user/docente").authenticated()
                         .requestMatchers("/user/dir/**").hasAuthority("DIR")
                         .anyRequest().authenticated())

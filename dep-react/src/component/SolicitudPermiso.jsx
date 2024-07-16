@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import ModeloPermisoList from "./ModeloPermisoList";
 import { createPermisoConModeloDocente } from "../api";
-import { Button, Container, Typography, TextField, Snackbar, Alert } from "@mui/material";
+import {
+  Button,
+  Container,
+  Typography,
+  TextField,
+  Snackbar,
+  Alert,
+  Grid,
+} from "@mui/material";
 import dayjs from "dayjs";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
@@ -9,6 +17,7 @@ import { base } from "../api";
 
 const SolicitudPermiso = () => {
   const form = useRef();
+  const [currentDirector, setCurrentDirector] = useState(null);
   const [currentIdDocente, setCurrentIdDocente] = useState(null);
   const [selectedDocente, setSelectedDocente] = useState(null);
   const [selectedModelo, setSelectedModelo] = useState(null);
@@ -87,12 +96,26 @@ const SolicitudPermiso = () => {
           return;
         }
         try {
-          const response = await axios.get(`${baseURL}/api/docentes/${currentIdDocente}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const response = await axios.get(
+            `${baseURL}/api/docentes/${currentIdDocente}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           setSelectedDocente(response.data);
+
+          const response2 = await axios.get(
+            `${baseURL}/api/docentes/posicion`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setCurrentDirector(response2.data);
+
         } catch (error) {
           console.error("Error fetching docente:", error);
         }
@@ -105,7 +128,9 @@ const SolicitudPermiso = () => {
     e.preventDefault();
 
     if (!selectedDocente || !selectedModelo) {
-      setSnackbarMessage("Por favor, seleccione un docente y un modelo de permiso.");
+      setSnackbarMessage(
+        "Por favor, seleccione un docente y un modelo de permiso."
+      );
       setSnackbarSeverity("error");
       setOpenSnackbar(true);
       return;
@@ -117,7 +142,7 @@ const SolicitudPermiso = () => {
       fechaAutoriza: "",
       consecutivoPermisos: null,
       descripcionPermisos: descripcion,
-      directorPermisos: "LUZ ANGELA ARISTIZABAL QUINTERO",
+      directorPermisos: currentDirector.nombre, //texto del pdf
     };
 
     createPermisoConModeloDocente(
@@ -147,8 +172,8 @@ const SolicitudPermiso = () => {
       name: selectedDocente.nombre,
       email: selectedDocente.correo,
       message: descripcion,
-      copy_to: selectedDocente.correo,
-      estado: "Proceso"
+      copy_to: `${selectedDocente.correo},${currentDirector.correo}`,
+      estado: "Proceso",
     };
 
     emailjs
@@ -173,61 +198,83 @@ const SolicitudPermiso = () => {
   };
 
   return (
-    <Container sx={{ height: 400, width: "100%", marginTop: 10, marginBottom: 5 }}>
-      <Typography variant="h4">Solicitud de Permiso</Typography>
+    <Container
+      sx={{ height: 400, width: "100%", marginTop: 10, marginBottom: 5 }}
+    >
+      <Typography variant="h3" sx={{ marginBottom: 5 }}>
+        Solicitud de Permiso
+      </Typography>
 
-      <Typography variant="h6">Docente Actual</Typography>
+      <Typography variant="h5" sx={{ marginBottom: 1 }}>
+        Docente Actual
+      </Typography>
       {selectedDocente && (
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ marginBottom: 5 }}>
           {selectedDocente.nombre} ({selectedDocente.correo})
         </Typography>
       )}
 
-      <Typography variant="h6">Seleccionar Modelo de Permiso</Typography>
+      <Typography variant="h6" sx={{ marginBottom: 1, fontSize: 18 }}>
+        Seleccionar Modelo de Permiso
+      </Typography>
       <ModeloPermisoList onSelect={setSelectedModelo} />
 
-      <TextField
-        type="date"
-        label="Fecha de Inicio"
-        value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-        style={{
-          width: "15%",
-          padding: "10px",
-          borderRadius: "4px",
-          marginBottom: "10px",
-          marginRight: "15px",
-        }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+      <Grid container spacing={2} sx={{ marginBottom: 5 }}>
+        <Grid item xs={12} sm={6} md={4}>
+          <TextField
+            type="date"
+            label="Fecha de Inicio"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+              style: {
+                fontSize: "2rem",
+              },
+            }}
+            InputProps={{
+              style: {
+                fontSize: "1.2rem",
+              },
+            }}
+          />
+        </Grid>
 
-      <TextField
-        type="date"
-        label="Fecha de Fin"
-        value={endDate}
-        onChange={(e) => setEndDate(e.target.value)}
-        style={{
-          width: "15%",
-          padding: "10px",
-          borderRadius: "4px",
-          marginBottom: "10px",
-          marginRight: "15px",
-        }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+        <Grid item xs={12} sm={6} md={4} >
+          <TextField
+            type="date"
+            label="Fecha de Fin"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+              style: {
+                fontSize: "2rem",
+              },
+            }}
+            InputProps={{
+              style: {
+                fontSize: "1.2rem",
+              },
+            }}
+          />
+        </Grid>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-        disabled={!selectedDocente || !selectedModelo || !descripcion}
-      >
-        Solicitar Permiso
-      </Button>
+        <Grid item xs={12} md={4} >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            disabled={!selectedDocente || !selectedModelo || !descripcion}
+            fullWidth
+            sx={{marginBottom: 1}}
+          >
+            Solicitar Permiso
+          </Button>
+        </Grid>
+      </Grid>
 
       <Snackbar
         open={openSnackbar}
@@ -237,7 +284,7 @@ const SolicitudPermiso = () => {
         <Alert
           onClose={() => setOpenSnackbar(false)}
           severity={snackbarSeverity}
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
           {snackbarMessage}
         </Alert>

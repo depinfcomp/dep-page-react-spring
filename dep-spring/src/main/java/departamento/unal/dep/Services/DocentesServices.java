@@ -30,6 +30,10 @@ public class DocentesServices {
         return docentesRepository.findById(id);
     }
 
+    public Optional<Docentes> getDocenteByPosicion(String posicion){
+        return Optional.ofNullable(docentesRepository.findByPosicion(posicion));
+    }
+
     public List<Docentes> getDocenteByNombre(String nombre) {
         return docentesRepository.findByNombre(nombre);
     }
@@ -41,6 +45,7 @@ public class DocentesServices {
             existingDocente.setNombre(request.getNombre());
             existingDocente.setCorreo(request.getCorreo());
             existingDocente.setCvlac(request.getCvlac());
+            existingDocente.setPosicion(request.getPosicion());
             try {
                 return docentesRepository.save(existingDocente);
             } catch (DataIntegrityViolationException e) {

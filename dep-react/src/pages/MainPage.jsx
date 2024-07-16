@@ -1,6 +1,4 @@
 import Box from "@mui/material/Box";
-import NavTopComponent from "../component/NavTopComponent";
-import NavMidComponent from "../component/NavMidComponent";
 import NoticiasComponent from "../component/NoticiasComponent";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -12,8 +10,6 @@ import EnlacesInteresComponent from "../component/EnlacesInteresComponent";
 const Main = () => {
   return (
     <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
-      {/* <NavTopComponent />
-      <NavMidComponent /> */}
       <Box>
         <Container disableGutters>
           <Grid container spacing={2} columnSpacing={5}>

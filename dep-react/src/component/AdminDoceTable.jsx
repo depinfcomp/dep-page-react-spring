@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Box, Typography, Container, Modal, TextField } from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  Container,
+  Modal,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
@@ -27,7 +38,7 @@ const AdminDoceTable = () => {
   const token = localStorage.getItem("token");
   const baseURL = base;
 
-  console.log(baseURL);
+  //console.log(baseURL);
 
   const [docentes, setDocentes] = useState([]);
   const [selectedData, setSelectedData] = useState(null);
@@ -77,6 +88,7 @@ const AdminDoceTable = () => {
       );
       const { idDocente, ...dataWithoutId } = updatedData;
       try {
+        console.log(dataWithoutId);
         await axios.put(`${baseURL}/api/docentes/${idDocente}`, dataWithoutId, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -116,8 +128,12 @@ const AdminDoceTable = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setDocentes((prevData) => prevData.filter((item) => item.idDocente !== id));
-      enqueueSnackbar("Registro eliminado exitosamente", { variant: "success" });
+      setDocentes((prevData) =>
+        prevData.filter((item) => item.idDocente !== id)
+      );
+      enqueueSnackbar("Registro eliminado exitosamente", {
+        variant: "success",
+      });
     } catch (error) {
       console.error("Error al eliminar el registro:", error);
       enqueueSnackbar("Error al eliminar el registro", { variant: "error" });
@@ -221,7 +237,8 @@ const ModifyDocenteModal = ({ open, handleClose, data, handleSave }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={{ ...modalStyle, width: 400 }}>
-        <Typography variant="h6" component="h2">
+        {/* nombre del modal */}
+        <Typography variant="h5" component="h2">
           {docente.idDocente ? "Modificar Docente" : "Crear Docente"}
         </Typography>
         <TextField
@@ -231,6 +248,14 @@ const ModifyDocenteModal = ({ open, handleClose, data, handleSave }) => {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          sx={{
+            "& .MuiInputBase-input": {
+              fontSize: "1.3rem", // Tamaño de la letra del texto de entrada
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "1.5rem", // Tamaño de la letra de la etiqueta
+            },
+          }}
         />
         <TextField
           label="Correo"
@@ -239,6 +264,14 @@ const ModifyDocenteModal = ({ open, handleClose, data, handleSave }) => {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          sx={{
+            "& .MuiInputBase-input": {
+              fontSize: "1.3rem", // Tamaño de la letra del texto de entrada
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "1.5rem", // Tamaño de la letra de la etiqueta
+            },
+          }}
         />
         <TextField
           label="CvLAC"
@@ -247,20 +280,67 @@ const ModifyDocenteModal = ({ open, handleClose, data, handleSave }) => {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          sx={{
+            "& .MuiInputBase-input": {
+              fontSize: "1.3rem", // Tamaño de la letra del texto de entrada
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "1.5rem", // Tamaño de la letra de la etiqueta
+            },
+          }}
         />
-        <TextField
+        {/* <TextField
           label="Posición"
           name="posicion"
           value={docente.posicion || ""}
           onChange={handleChange}
           fullWidth
           margin="normal"
-        />
+        /> */}
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="posicion-label" sx={{ fontSize: "1.2rem" }}>
+            Posición
+          </InputLabel>
+          <Select
+            labelId="posicion-label"
+            label="Posición"
+            name="posicion"
+            value={docente.posicion || ""}
+            onChange={handleChange}
+            sx={{ fontSize: "1.2rem" }} // Tamaño de la letra del Select
+          >
+            <MenuItem value="Docente" sx={{ fontSize: "1.2rem" }}>
+              Docente
+            </MenuItem>
+            <MenuItem value="Director" sx={{ fontSize: "1.2rem" }}>
+              Director
+            </MenuItem>
+            <MenuItem value="Directora" sx={{ fontSize: "1.2rem" }}>
+              Directora
+            </MenuItem>
+            <MenuItem
+              value="Auxiliar administrativa"
+              sx={{ fontSize: "1.2rem" }}
+            >
+              Auxiliar Administrativa
+            </MenuItem>
+            <MenuItem
+              value="Auxiliar administrativo"
+              sx={{ fontSize: "1.2rem" }}
+            >
+              Auxiliar Administrativo
+            </MenuItem>
+          </Select>
+        </FormControl>
         <Box mt={2} display="flex" justifyContent="flex-end">
           <Button onClick={handleClose} color="secondary">
             Cancelar
           </Button>
-          <Button onClick={handleSubmit} color="primary" style={{ marginLeft: 8 }}>
+          <Button
+            onClick={handleSubmit}
+            color="primary"
+            style={{ marginLeft: 8 }}
+          >
             Guardar
           </Button>
         </Box>
@@ -270,11 +350,11 @@ const ModifyDocenteModal = ({ open, handleClose, data, handleSave }) => {
 };
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
 };

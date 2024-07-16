@@ -46,4 +46,8 @@ public class ModeloPermisosController {
     public Boolean deleteModeloPermiso(@PathVariable("id") Long id) {
         return modeloPermisosServices.deleteModeloPermiso(id);
     }
+
+    public String getModelo(Long id) {
+        return modeloPermisosServices.getModeloPermisoById(id).get().getNombreModelo(); 
+    }
 }

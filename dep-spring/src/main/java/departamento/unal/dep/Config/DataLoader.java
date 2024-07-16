@@ -43,8 +43,8 @@ public class DataLoader {
             List<Docentes> docentes = Arrays.asList(
                     new Docentes("LUZ ANGELA ARISTIZABAL QUINTERO", "laaristizabalq@unal.edu.co",
                             "https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000219169",
-                            "DIRECTORA"),
-                    new Docentes("MANUELA SAENZ GIRALDO", "msaenzg@unal.edu.co", null, "Auxiliar Administrativa"),
+                            "Directora"),
+                    new Docentes("MANUELA SAENZ GIRALDO", "msaenzg@unal.edu.co", null, "Auxiliar administrativa"),
                     new Docentes("ALFONSO PIO AGUDELO SALAZAR", "apagudelosa@unal.edu.co",
                             "https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000626481",
                             null),
@@ -148,29 +148,29 @@ public class DataLoader {
                 System.out.println("Registro duplicado: " + modelo1.getNombreModelo());
             }
 
-            List<NoticiasEventos> noticiasEventos = Arrays.asList(
-                    new NoticiasEventos("Congreso Colombiano De Computación", "Evento",
-                            "https://i.ibb.co/cYwHYpZ/congreso.jpg", "https://sco2.org/18ccc/", "2024-09-04T00:00:00",
-                            "2024-09-06T24:00:00", "2024-06-01", "2024-09-07", "2024-06-01"),
-                    new NoticiasEventos("Expecialización En Inteligencia Artificial", "Noticia",
-                            "https://i.ibb.co/1Z2mKJQ/Imagen-de-Whats-App-2024-06-19-a-las-14-10-39-7850d47c.jpg", null,
-                            null, null, "2024-06-01", "2024-09-07", "2024-06-01"),
-                    new NoticiasEventos("Especialización En Analítica De Datos", "Noticia",
-                            "https://i.ibb.co/8YNf7YX/Imagen-de-Whats-App-2024-06-19-a-las-14-10-39-01d20acd.jpg", null,
-                            null, null, "2024-06-01", "2024-09-07", "2024-06-01"),
-                    new NoticiasEventos("Maestria", "Noticia", "https://i.ibb.co/9cjX18L/icons-2.png", null, null, null,
-                            "2024-06-01", "2024-09-07", "2024-06-01"),
-                    new NoticiasEventos("Curso Extension Desarrollo Movil", "Noticia",
-                            "https://i.ibb.co/Jn9rTMB/aplicaciones-moviles.jpg", null, null, null, "2024-06-01",
-                            "2024-09-07", "2024-06-01"));
+        //     List<NoticiasEventos> noticiasEventos = Arrays.asList(
+        //             new NoticiasEventos("Congreso Colombiano De Computación", "Evento",
+        //                     "https://i.ibb.co/cYwHYpZ/congreso.jpg", "https://sco2.org/18ccc/", "2024-09-04T00:00:00",
+        //                     "2024-09-06T24:00:00", "2024-06-01", "2024-09-07", "2024-06-01"),
+        //             new NoticiasEventos("Expecialización En Inteligencia Artificial", "Noticia",
+        //                     "https://i.ibb.co/1Z2mKJQ/Imagen-de-Whats-App-2024-06-19-a-las-14-10-39-7850d47c.jpg", null,
+        //                     null, null, "2024-06-01", "2024-09-07", "2024-06-01"),
+        //             new NoticiasEventos("Especialización En Analítica De Datos", "Noticia",
+        //                     "https://i.ibb.co/8YNf7YX/Imagen-de-Whats-App-2024-06-19-a-las-14-10-39-01d20acd.jpg", null,
+        //                     null, null, "2024-06-01", "2024-09-07", "2024-06-01"),
+        //             new NoticiasEventos("Maestria", "Noticia", "https://i.ibb.co/9cjX18L/icons-2.png", null, null, null,
+        //                     "2024-06-01", "2024-09-07", "2024-06-01"),
+        //             new NoticiasEventos("Curso Extension Desarrollo Movil", "Noticia",
+        //                     "https://i.ibb.co/Jn9rTMB/aplicaciones-moviles.jpg", null, null, null, "2024-06-01",
+        //                     "2024-09-07", "2024-06-01"));
 
-            for (NoticiasEventos noticia : noticiasEventos) {
-                try {
-                    noticiasEventosRepository.save(noticia);
-                } catch (DataIntegrityViolationException e) {
-                    System.out.println("Registro duplicado: " + noticia.getTitulo());
-                }
-            }
+        //     for (NoticiasEventos noticia : noticiasEventos) {
+        //         try {
+        //             noticiasEventosRepository.save(noticia);
+        //         } catch (DataIntegrityViolationException e) {
+        //             System.out.println("Registro duplicado: " + noticia.getTitulo());
+        //         }
+        //     }
 
             List<EnlacesInteres> enlacesInteres = Arrays.asList(
                     new EnlacesInteres(null, "Producción Científica",

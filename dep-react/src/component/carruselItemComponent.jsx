@@ -1,11 +1,35 @@
 import PropTypes from 'prop-types';
 import { Paper, Button, Box } from '@mui/material';
+import { base } from "../api";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Item({ item }) {
+  const consumir = base + "/upload/image/";
+  const [imagenVer, setImagenVer] = useState(null);
+
+  const handleFetchImage = async () => {
+    try {
+      const response = await axios.get(consumir + item.linkImagen, {
+        responseType: "blob", // Fetch as a blob
+      });
+      const imagenURL = URL.createObjectURL(response.data);
+      setImagenVer(imagenURL); 
+    } catch (error) {
+      console.error("Error fetching the image:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleFetchImage(); 
+  }, [item.linkImagen]);
+
   return (
     <Paper>
       <Box sx={{ position: 'relative' }}>
-        <img src={item.linkImagen} alt={item.titulo} style={{ width: '100%' }} />
+        {imagenVer && ( // Render image only if imagenVer is not null
+          <img src={imagenVer} alt={item.titulo} style={{ width: '100%' }} />
+        )}
         <Button
           href={item.linkInformacion}
           variant="contained"
@@ -28,7 +52,7 @@ Item.propTypes = {
     linkImagen: PropTypes.string.isRequired,
     titulo: PropTypes.string.isRequired,
     linkInformacion: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
 };
 

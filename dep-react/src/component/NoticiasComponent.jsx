@@ -1,14 +1,7 @@
 import Carousel from 'react-material-ui-carousel';
 import Item from './carruselItemComponent';
-// import { IconButton } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { base } from "../api";
-
-/*const items = [
-  { id: '1', title: 'congreso', image: '/flayers/Noticias/congreso.png', link: 'https://sco2.org/18ccc/' },
-  { id: '3', title: 'Maestrie', image: '/flayers/Noticias/icons_2.png', link: 'https://ejemplo.com/pagina2' },
-  { id: '2', title: 'DesarrolloMovil', image: '/flayers/Noticias/aplicaciones_moviles.jpg', link: 'https://www.fadmon.unal.edu.co/fileadmin/user_upload/facultad/proyectos2024/imagenescursos/aplicaciones%20m%C3%B3viles.pdf' },
-];*/
 
 import { useEffect, useState } from "react";
 import axios from "axios";

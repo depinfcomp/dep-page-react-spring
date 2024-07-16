@@ -11,10 +11,15 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import { useSnackbar } from "notistack";
+import { base } from "../api";
 
 // eslint-disable-next-line react/prop-types
 const ModifyNotiEvent = ({ open, handleClose, data, handleSave }) => {
   const [formData, setFormData] = useState({ ...data });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setFormData({ ...data });
@@ -30,8 +35,62 @@ const ModifyNotiEvent = ({ open, handleClose, data, handleSave }) => {
     setFormData((prevData) => ({ ...prevData, [name]: formattedDate }));
   };
 
-  const handleSaveChanges = () => {
-    handleSave(formData);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && !file.type.startsWith("image/")) {
+      enqueueSnackbar("Solo se permiten archivos de imagen.", { variant: "error" });
+      setSelectedFile(null);
+      return;
+    }
+    setSelectedFile(file);
+  };
+
+  const validateDates = () => {
+    const { fechaInicio, fechaFin, visibleInicio, visibleFin } = formData;
+    const errors = [];
+
+    if (new Date(fechaInicio) > new Date(fechaFin)) {
+      errors.push("La fecha de inicio debe ser menor o igual a la fecha de fin.");
+    }
+    if (new Date(visibleInicio) > new Date(visibleFin)) {
+      errors.push("La fecha visible de inicio debe ser menor o igual a la fecha visible de fin.");
+    }
+
+    return errors;
+  };
+
+  const handleSaveChanges = async () => {
+    const validationErrors = validateDates();
+    if (validationErrors.length > 0) {
+      validationErrors.forEach(error => enqueueSnackbar(error, { variant: "error" }));
+      return;
+    }
+
+    let updatedFormData = { ...formData };
+
+    if (selectedFile) {
+      const imageData = new FormData();
+      imageData.append("file", selectedFile);
+
+      try {
+        const response = await axios.post(`${base}/upload/image`, imageData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        updatedFormData = {
+          ...updatedFormData,
+          linkImagen: response.data,
+        };
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        enqueueSnackbar("Error uploading image", { variant: "error" });
+        return;
+      }
+    }
+
+    handleSave(updatedFormData);
     handleClose();
   };
 
@@ -77,14 +136,22 @@ const ModifyNotiEvent = ({ open, handleClose, data, handleSave }) => {
             </Select>
           </FormControl>
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Imagen"
-            name="linkImagen"
-            value={formData.linkImagen || ""}
-            onChange={handleChange}
-          />
+          <Grid item xs={12}>
+            <Button variant="contained" component="label">
+              Subir Imagen
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </Button>
+            {formData.linkImagen && (
+              <Typography variant="body2" component="p">
+                Imagen seleccionada: {formData.linkImagen}
+              </Typography>
+            )}
+          </Grid>
           <TextField
             fullWidth
             margin="normal"

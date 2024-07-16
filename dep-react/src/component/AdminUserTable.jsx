@@ -79,7 +79,7 @@ const AdminUserTable = ({ users, setUsers }) => {
   const getRowId = (row) => row.username; // Assuming username is unique and can be used as ID
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ padding: '16px' }}>
       <Box
         sx={{
           marginTop: 8,
@@ -91,7 +91,7 @@ const AdminUserTable = ({ users, setUsers }) => {
         <Typography component="h1" variant="h5" sx={{ fontSize: "2rem" }}>
           Administración de Usuarios
         </Typography>
-        <div style={{ height: 400, width: '100%', marginTop: 16 }}>
+        <div style={{ height: 400, width: '100%', marginTop: 16, marginBottom: 16 }}>
           <DataGrid
             rows={users.filter(user => user.username !== currentUser)}
             columns={columns}

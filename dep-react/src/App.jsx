@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Main from "./pages/MainPage.jsx";
 import HeadComponent from "./component/HeadComponent";
@@ -33,6 +33,7 @@ import { FloatingWhatsApp } from "react-floating-whatsapp";
 import avatarImage from "./assets/imagenes/avatar.jpg";
 import MasInformacionPage from "./pages/MasInformacionPage.jsx";
 import FloatingButton from "./component/FloatingButton.jsx";
+import PruebaImagen from "./pages/PruebaImagen.jsx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,6 +42,17 @@ function App() {
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
   }, []);
+
+  const adminRoutes = [
+    "/login",
+    "/permisos",
+    "/gestion-permisos",
+    "/noti-even-admin",
+    "/UserAdmin",
+    "/perfil",
+    "/enlaces-interes",
+    "/DoceAdmin",
+  ];
 
   return (
     <BrowserRouter>
@@ -66,7 +78,9 @@ function App() {
         <Route path="/posgrados" element={<PosgradosPage />} />
         <Route path="/pregrados" element={<PregradosPage />} />
         <Route path="/mas-informacion" element={<MasInformacionPage />} />
+        <Route path="/prueba-imagen" element={<PruebaImagen />} />
 
+        {/* rutas de adminitracion */}
         <Route
           path="/login"
           element={
@@ -127,11 +141,26 @@ function App() {
           path="/DoceAdmin"
           element={
             <ProtectedRoute roleAllowed={["DIR", "ADMIN"]}>
-              <DoceAdminPage />
+              <DoceAdminPage /> 
             </ProtectedRoute>
           }
         />
       </Routes>
+      <LocationBasedComponents adminRoutes={adminRoutes} />
+      <Footer />
+    </BrowserRouter>
+  );
+}
+
+// limitar renderizado botones flotantes
+// eslint-disable-next-line react/prop-types
+function LocationBasedComponents({ adminRoutes }) {
+  const location = useLocation();
+  // eslint-disable-next-line react/prop-types
+  const isOnAdminRoute = adminRoutes.includes(location.pathname);
+
+  return !isOnAdminRoute ? (
+    <>
       <FloatingWhatsApp
         phoneNumber="573108187034"
         accountName="Departamento Informatica"
@@ -143,9 +172,8 @@ function App() {
         allowClickAway
       />
       <FloatingButton />
-      <Footer />
-    </BrowserRouter>
-  );
+    </>
+  ) : null;
 }
 
 export default App;

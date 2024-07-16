@@ -10,5 +10,6 @@ import java.util.List;
 public interface DocentesRepository extends JpaRepository<Docentes, Long> {
     List<Docentes> findByNombre(String nombre);
     Docentes findByIdDocente(Long idDocente);
+    Docentes findByPosicion(String posicion);
 }
 

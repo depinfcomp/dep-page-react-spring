@@ -1,14 +1,14 @@
 /*ModeloPermisoLis*/
 
-import { useEffect, useState } from 'react';
-import { getModeloPermisos } from '../api';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { useEffect, useState } from "react";
+import { getModeloPermisos } from "../api";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import axios from "axios";
 import { base } from "../api";
 
 const ModeloPermisoList = ({ onSelect }) => {
   const [modelos, setModelos] = useState([]);
-  const [selectedModelo, setSelectedModelo] = useState('');
+  const [selectedModelo, setSelectedModelo] = useState("");
   const baseURL = base + "/api/modeloPermisos";
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const ModeloPermisoList = ({ onSelect }) => {
         });
         setModelos(response.data);
       } catch (error) {
-        console.error('Error fetching modelos de permiso:', error);
+        console.error("Error fetching modelos de permiso:", error);
       }
     };
 
@@ -36,8 +36,23 @@ const ModeloPermisoList = ({ onSelect }) => {
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="modelo-select-label">Modelos de Permiso</InputLabel>
+    <FormControl
+      fullWidth
+      sx={{
+        marginBottom: 5,
+        marginTop: 0.9,
+        width: {
+          xs: '100%',
+          sm: '80%', 
+          md: '60%', 
+          lg: '50%', 
+          xl: '40%', 
+        },
+      }}
+    >
+      <InputLabel id="modelo-select-label" sx={{ fontSize: "1.5rem" }}>
+        Modelos de Permiso
+      </InputLabel>
       <Select
         labelId="modelo-select-label"
         id="modelo-select"
@@ -46,7 +61,7 @@ const ModeloPermisoList = ({ onSelect }) => {
         onChange={handleChange}
       >
         {modelos.map((modelo) => (
-          <MenuItem key={modelo.idModeloPermiso} value={modelo}>
+          <MenuItem key={modelo.idModeloPermiso} value={modelo} sx={{ fontSize: "1.5rem" }}>
             {modelo.nombreModelo}
           </MenuItem>
         ))}

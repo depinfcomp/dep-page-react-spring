@@ -9,6 +9,7 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Typography,
 } from "@mui/material";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import PDFAusenciaRemunerada from "../component/PDF/PDFAusenciaRemunerada";
@@ -52,9 +53,9 @@ const ListPermisos = () => {
 
   const fetchPermisos = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.get(baseURL, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setListaPermisos(response.data);
     } catch (error) {
@@ -64,9 +65,9 @@ const ListPermisos = () => {
 
   const fetchDocentes = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.get(docenteURL, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setDocentes(response.data);
     } catch (error) {
@@ -76,9 +77,9 @@ const ListPermisos = () => {
 
   const fetchModelos = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.get(modeloURL, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setModelos(response.data);
     } catch (error) {
@@ -94,7 +95,9 @@ const ListPermisos = () => {
 
   const getDocenteName = (idPermiso) => {
     for (let docente of Docentes) {
-      if (docente.permisosList.some((permiso) => permiso.idPermisos === idPermiso)) {
+      if (
+        docente.permisosList.some((permiso) => permiso.idPermisos === idPermiso)
+      ) {
         return docente.nombre;
       }
     }
@@ -103,7 +106,9 @@ const ListPermisos = () => {
 
   const getModeloName = (idPermiso) => {
     for (let modelo of Modelos) {
-      if (modelo.permisosList.some((permiso) => permiso.idPermisos === idPermiso)) {
+      if (
+        modelo.permisosList.some((permiso) => permiso.idPermisos === idPermiso)
+      ) {
         return modelo.nombreModelo;
       }
     }
@@ -132,9 +137,9 @@ const ListPermisos = () => {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const config = {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       };
       const response = await axios.put(
         `${baseURL}/${selectedPermiso.idPermisos}`,
@@ -143,7 +148,9 @@ const ListPermisos = () => {
       );
       setListaPermisos(
         Permisos.map((permiso) =>
-          permiso.idPermisos === selectedPermiso.idPermisos ? response.data : permiso
+          permiso.idPermisos === selectedPermiso.idPermisos
+            ? response.data
+            : permiso
         )
       );
       setOpen(false);
@@ -159,13 +166,16 @@ const ListPermisos = () => {
     setSelectedPermiso({
       ...selectedPermiso,
       estadoPermisos: value,
-      fechaAutoriza: value === "autorizado" ? new Date().toISOString().split("T")[0] : "",
+      fechaAutoriza:
+        value === "autorizado" ? new Date().toISOString().split("T")[0] : "",
     });
   };
 
   const getDocenteInfo = (idPermiso) => {
     for (let docente of Docentes) {
-      if (docente.permisosList.some((permiso) => permiso.idPermisos === idPermiso)) {
+      if (
+        docente.permisosList.some((permiso) => permiso.idPermisos === idPermiso)
+      ) {
         return { nombre: docente.nombre, email: docente.correo };
       }
     }
@@ -182,16 +192,19 @@ const ListPermisos = () => {
       estado: selectedPermiso.estadoPermisos,
     };
 
-    emailjs.send(
-      "service_aktv2wd",
-      "template_6s97vv6",
-      templateParams,
-      "vQenyxKZK9TX9WT5b"
-    ).then((response) => {
-      console.log("Email enviado con éxito!", response.status, response.text);
-    }).catch((error) => {
-      console.error("Error al enviar el email:", error);
-    });
+    emailjs
+      .send(
+        "service_aktv2wd",
+        "template_6s97vv6",
+        templateParams,
+        "vQenyxKZK9TX9WT5b"
+      )
+      .then((response) => {
+        console.log("Email enviado con éxito!", response.status, response.text);
+      })
+      .catch((error) => {
+        console.error("Error al enviar el email:", error);
+      });
   };
 
   const columns = [
@@ -238,6 +251,14 @@ const ListPermisos = () => {
 
   return (
     <>
+      <Typography
+        component="h1"
+        variant="h5"
+        align="center"
+        sx={{ fontSize: "3rem", marginTop: 3 }}
+      >
+        Solicitud De Permisos
+      </Typography>
       <ThemeProvider theme={theme}>
         <Box sx={{ height: 400, width: "100%", marginTop: 5, marginBottom: 5 }}>
           <DataGrid
@@ -338,7 +359,11 @@ const ListPermisos = () => {
               </PDFDownloadLink>
             </>
           )}
-          <Button onClick={handlePdfClose} variant="contained" color="secondary">
+          <Button
+            onClick={handlePdfClose}
+            variant="contained"
+            color="secondary"
+          >
             Cerrar
           </Button>
         </Box>

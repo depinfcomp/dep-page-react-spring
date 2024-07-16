@@ -64,6 +64,12 @@ const TableNotiEvent = () => {
   };
 
   const handleSaveChanges = async (updatedData) => {
+
+    if (!updatedData.linkImagen) {
+      enqueueSnackbar("Debe cargar una imagen antes de guardar.", { variant: "error" });
+      return;
+    }
+    
     if (updatedData.idNoticiaEvento) {
       setnotiEven((prevData) =>
         prevData.map((item) =>
@@ -106,13 +112,20 @@ const TableNotiEvent = () => {
     handleCloseModal();
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id,image) => {
     try {
       await axios.delete(`${notiEventURL}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      
+      await axios.delete(`${base}/upload/image/${image}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
       setnotiEven((prevData) => prevData.filter((item) => item.idNoticiaEvento !== id));
       enqueueSnackbar("Registro eliminado exitosamente", { variant: "success" });
     } catch (error) {
@@ -147,7 +160,7 @@ const TableNotiEvent = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => handleDelete(params.row.idNoticiaEvento)}
+            onClick={() => handleDelete(params.row.idNoticiaEvento, params.row.linkImagen)}
             style={{ marginLeft: 8 }}
           >
             Eliminar

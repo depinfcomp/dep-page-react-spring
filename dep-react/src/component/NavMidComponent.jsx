@@ -132,7 +132,7 @@ const NavMidComponent = ({ isAuthenticated, setIsAuthenticated }) => {
                 startIcon={<AddToQueueIcon />}
                 sx={{ fontSize: 16, padding: "10px 20px" }}
               >
-                Noticias y Eventos
+                Admin Noticias y Eventos
               </Button>
             )}
             {isAuthenticated && userHasRole(["DIR", "AUX", "ADMIN"]) && (

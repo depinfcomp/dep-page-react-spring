@@ -1,13 +1,8 @@
-import NavTopComponent from "../component/NavTopComponent";
-import NavMidComponent from "../component/NavMidComponent";
-
 import { Docentes, Administrativos } from "../component/DocAdmiComponent.jsx";
 
 const DocentesPage = () => {
   return (
     <>
-      {/* <NavTopComponent />
-      <NavMidComponent /> */}
       <div className="fcen-section-heading">
         <p style={{ fontSize: "60px" }}>Adminitrativos</p>
       </div>
