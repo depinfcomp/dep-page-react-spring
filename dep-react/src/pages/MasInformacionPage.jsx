@@ -25,14 +25,14 @@ const MasInformacionPage = ({ open, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, confirmarEmail } = formData;
-
+  
     if (email !== confirmarEmail) {
       enqueueSnackbar("Los correos electrónicos no coinciden", { variant: "error" });
       return;
     }
-
+  
     try {
-      const response = await fetch('http://localhost:3001/send-email', {
+      const response = await fetch('http://192.168.1.24/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,11 +50,11 @@ const MasInformacionPage = ({ open, handleClose }) => {
           `,
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Error al enviar el correo');
       }
-
+  
       const data = await response.json();
       console.log('Correo enviado:', data);
       enqueueSnackbar('Información enviada con éxito', { variant: "success" });
@@ -64,6 +64,7 @@ const MasInformacionPage = ({ open, handleClose }) => {
       enqueueSnackbar('Error al enviar el correo', { variant: "error" });
     }
   };
+  
 
   const modalStyle = {
     position: 'absolute',
