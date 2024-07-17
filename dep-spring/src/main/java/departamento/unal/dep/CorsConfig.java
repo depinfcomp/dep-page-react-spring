@@ -13,7 +13,8 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://192.168.4.34",
                         "http://168.176.155.32",
-                        "http://infocomp.manizales.unal.edu.co")
+                        "http://infocomp.manizales.unal.edu.co",
+                        "http://192.168.1.24")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);
     }
