@@ -1,22 +1,10 @@
 import axios from 'axios';
 
-// Crear la instancia de axios
-// const api = axios.create({
-//   baseURL: 'http://localhost:8092/api'
-// });
-
-//export const base = 'http://192.168.1.1:8092';
-//export const base = 'http://172.22.80.1:8092';
-//export const base = 'http://192.168.4.34';
 export const base = 'http://168.176.155.32';
-//export const base = 'http://192.168.1.24';
-
 
 const api = axios.create({
   baseURL: base + '/api'
 });
-
-
 
 // Interceptor para añadir el token a las solicitudes no GET
 api.interceptors.request.use(

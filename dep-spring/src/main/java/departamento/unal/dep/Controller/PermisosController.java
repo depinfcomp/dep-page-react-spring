@@ -3,6 +3,8 @@ package departamento.unal.dep.Controller;
 import departamento.unal.dep.Entity.Docentes;
 import departamento.unal.dep.Entity.ModeloPermisos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import departamento.unal.dep.Entity.Permisos;
@@ -40,24 +42,37 @@ public class PermisosController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public Permisos createPermiso(@RequestBody Permisos permiso) {
-        return permisosServices.savePermiso(permiso);
+    public ResponseEntity<?> createPermiso(@RequestBody Permisos permiso) {
+        try {
+            Permisos nuevoPermiso = permisosServices.savePermiso(permiso);
+            return ResponseEntity.ok(nuevoPermiso);
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Error: " + e.getMessage());
+        }
     }
 
     @PostMapping("/nuevoPermiso/{docenteId}/{modeloId}")
     @PreAuthorize("isAuthenticated()")
-    public Permisos savePermisos(@PathVariable Long docenteId,
+    public ResponseEntity<?> savePermisos(@PathVariable Long docenteId,
             @PathVariable Long modeloId, @RequestBody Permisos permiso) {
-        Docentes docente = docentesServices.getDocenteById(docenteId)
-                .orElseThrow(() -> new RuntimeException(" not found with id: " + docenteId));
+        try {
+            Docentes docente = docentesServices.getDocenteById(docenteId)
+                    .orElseThrow(() -> new RuntimeException("Docente no encontrado con id: " + docenteId));
+            ModeloPermisos modeloPermiso = modeloPermisosServices.getModeloPermisoById(modeloId)
+                    .orElseThrow(() -> new RuntimeException("ModeloPermiso no encontrado con id: " + modeloId));
 
-        ModeloPermisos modeloPermiso = modeloPermisosServices.getModeloPermisoById(modeloId)
-                .orElseThrow(() -> new RuntimeException(" not found with id: " + modeloId));
+            permiso.setDocente(docente);
+            permiso.setModeloPermiso(modeloPermiso);
 
-        permiso.setDocente(docente);
-        permiso.setModeloPermiso(modeloPermiso);
-
-        return permisosServices.savePermiso(permiso);
+            Permisos nuevoPermiso = permisosServices.savePermiso(permiso);
+            return ResponseEntity.ok(nuevoPermiso);
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
@@ -81,9 +96,9 @@ public class PermisosController {
         List<permisosDocenteDto> permisosDtoList = new ArrayList<>();
         for (Permisos it : permisosServices.getPermisosByDocente(docenteId)) {
             String nombreModelo = modeloPermisosServices
-                        .getModeloPermisoById(it.getModeloPermiso().getIdModeloPermiso())
-                        .map(ModeloPermisos::getNombreModelo)
-                        .orElse("Modelo no encontrado");
+                    .getModeloPermisoById(it.getModeloPermiso().getIdModeloPermiso())
+                    .map(ModeloPermisos::getNombreModelo)
+                    .orElse("Modelo no encontrado");
 
             permisosDocenteDto dto = new permisosDocenteDto(
                     it.getIdPermisos(),
@@ -158,7 +173,5 @@ class permisosDocenteDto {
     public String getDirectorPermisos() {
         return directorPermisos;
     }
-    
-    
 
 }

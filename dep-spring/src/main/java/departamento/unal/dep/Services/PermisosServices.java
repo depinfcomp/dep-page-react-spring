@@ -45,6 +45,15 @@ public class PermisosServices {
         ModeloPermisos modeloPermiso = modeloPermisosRepository.findById(permiso.getModeloPermiso().getIdModeloPermiso())
                 .orElseThrow(() -> new RuntimeException("ModeloPermiso no existe"));
 
+        // Verificar si ya existe un permiso en proceso
+        Optional<Permisos> existingPermisoEnProceso = permisosRepository
+                .findByDocente_IdDocenteAndModeloPermiso_IdModeloPermisoAndEstadoPermisos(
+                        docente.getIdDocente(), modeloPermiso.getIdModeloPermiso(), "Proceso");
+
+        if (existingPermisoEnProceso.isPresent()) {
+            throw new RuntimeException("Ya existe un permiso en proceso para este docente y modelo.");
+        }
+
         // Asignar docente y modelo al permiso
         permiso.setDocente(docente);
         permiso.setModeloPermiso(modeloPermiso);

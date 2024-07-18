@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import ModeloPermisoList from "./ModeloPermisoList";
+import DateFields from "./DateFields";
 import { createPermisoConModeloDocente } from "../api";
 import {
   Button,
   Container,
   Typography,
-  TextField,
   Snackbar,
   Alert,
   Grid,
 } from "@mui/material";
 import dayjs from "dayjs";
-import emailjs from "@emailjs/browser";
+import emailjs from "emailjs-com";
 import axios from "axios";
 import { base } from "../api";
 
@@ -29,33 +29,12 @@ const SolicitudPermiso = () => {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const baseURL = base;
 
-  const daysOfWeek = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-  ];
-  const monthsOfYear = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
+  const daysOfWeek = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  const monthsOfYear = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
   const formatDateWithDay = (dateString) => {
     const date = new Date(dateString);
-    date.setDate(date.getDate() + 1); // Sumar un día a la fecha
+    date.setDate(date.getDate() + 1);
     const dayOfWeek = daysOfWeek[date.getDay()];
     const month = monthsOfYear[date.getMonth()];
     return `${dayOfWeek} ${date.getDate()} de ${month}`;
@@ -65,7 +44,6 @@ const SolicitudPermiso = () => {
     if (startDate && endDate) {
       const formattedStartDate = formatDateWithDay(startDate);
       const formattedEndDate = formatDateWithDay(endDate);
-
       if (formattedStartDate === formattedEndDate) {
         setDescripcion(`el día ${formattedStartDate}`);
       } else {
@@ -96,26 +74,15 @@ const SolicitudPermiso = () => {
           return;
         }
         try {
-          const response = await axios.get(
-            `${baseURL}/api/docentes/${currentIdDocente}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const response = await axios.get(`${baseURL}/api/docentes/${currentIdDocente}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
           setSelectedDocente(response.data);
 
-          const response2 = await axios.get(
-            `${baseURL}/api/docentes/posicion`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const response2 = await axios.get(`${baseURL}/api/docentes/posicion`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
           setCurrentDirector(response2.data);
-
         } catch (error) {
           console.error("Error fetching docente:", error);
         }
@@ -128,9 +95,7 @@ const SolicitudPermiso = () => {
     e.preventDefault();
 
     if (!selectedDocente || !selectedModelo) {
-      setSnackbarMessage(
-        "Por favor, seleccione un docente y un modelo de permiso."
-      );
+      setSnackbarMessage("Por favor, seleccione un docente y un modelo de permiso.");
       setSnackbarSeverity("error");
       setOpenSnackbar(true);
       return;
@@ -142,7 +107,7 @@ const SolicitudPermiso = () => {
       fechaAutoriza: "",
       consecutivoPermisos: null,
       descripcionPermisos: descripcion,
-      directorPermisos: currentDirector.nombre, //texto del pdf
+      directorPermisos: currentDirector.nombre,
     };
 
     createPermisoConModeloDocente(
@@ -160,8 +125,9 @@ const SolicitudPermiso = () => {
         sendEmail();
       })
       .catch((error) => {
-        console.error("Error creando el permiso:", error);
-        setSnackbarMessage("Error creando el permiso.");
+        const errorMessage = error.response?.data || "Error creando el permiso.";
+        console.error("Error creando el permiso:", errorMessage);
+        setSnackbarMessage(errorMessage);
         setSnackbarSeverity("error");
         setOpenSnackbar(true);
       });
@@ -176,31 +142,28 @@ const SolicitudPermiso = () => {
       estado: "Proceso",
     };
 
-    emailjs
-      .send(
-        "service_aktv2wd",
-        "template_6s97vv6",
-        templateParams,
-        "vQenyxKZK9TX9WT5b"
-      )
-      .then((response) => {
-        console.log("Email enviado con éxito!", response.status, response.text);
-        setSnackbarMessage("Notificación enviada por email.");
-        setSnackbarSeverity("success");
-        setOpenSnackbar(true);
-      })
-      .catch((error) => {
-        console.error("Error al enviar el email:", error);
-        setSnackbarMessage("Error al enviar la notificación por email.");
-        setSnackbarSeverity("error");
-        setOpenSnackbar(true);
-      });
+    emailjs.send(
+      "service_aktv2wd",
+      "template_6s97vv6",
+      templateParams,
+      "vQenyxKZK9TX9WT5b"
+    )
+    .then((response) => {
+      console.log("Email enviado con éxito!", response.status, response.text);
+      setSnackbarMessage("Notificación enviada por email.");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+    })
+    .catch((error) => {
+      console.error("Error al enviar el email:", error);
+      setSnackbarMessage("Error al enviar la notificación por email.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
+    });
   };
 
   return (
-    <Container
-      sx={{ height: 400, width: "100%", marginTop: 10, marginBottom: 5 }}
-    >
+    <Container sx={{ height: 400, width: "100%", marginTop: 10, marginBottom: 5 }}>
       <Typography variant="h3" sx={{ marginBottom: 5 }}>
         Solicitud de Permiso
       </Typography>
@@ -219,61 +182,26 @@ const SolicitudPermiso = () => {
       </Typography>
       <ModeloPermisoList onSelect={setSelectedModelo} />
 
-      <Grid container spacing={2} sx={{ marginBottom: 5 }}>
-        <Grid item xs={12} sm={6} md={4}>
-          <TextField
-            type="date"
-            label="Fecha de Inicio"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "2rem",
-              },
-            }}
-            InputProps={{
-              style: {
-                fontSize: "1.2rem",
-              },
-            }}
-          />
-        </Grid>
+      {selectedModelo?.nombreModelo === "Ausencia Remunerada" && (
+        <DateFields
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
+      )}
 
-        <Grid item xs={12} sm={6} md={4} >
-          <TextField
-            type="date"
-            label="Fecha de Fin"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-              style: {
-                fontSize: "2rem",
-              },
-            }}
-            InputProps={{
-              style: {
-                fontSize: "1.2rem",
-              },
-            }}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={4} >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={!selectedDocente || !selectedModelo || !descripcion}
-            fullWidth
-            sx={{marginBottom: 1}}
-          >
-            Solicitar Permiso
-          </Button>
-        </Grid>
+      <Grid item xs={12} md={4}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          disabled={!selectedDocente || !selectedModelo || !descripcion}
+          fullWidth
+          sx={{ marginBottom: 1 }}
+        >
+          Solicitar Permiso
+        </Button>
       </Grid>
 
       <Snackbar

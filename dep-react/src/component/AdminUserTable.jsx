@@ -95,10 +95,28 @@ const AdminUserTable = ({ users, setUsers }) => {
           <DataGrid
             rows={users.filter(user => user.username !== currentUser)}
             columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5, 10, 20]}
+            getRowId={getRowId}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 7,
+                },
+              },
+            }}
+            pageSizeOptions={[7]}
             disableSelectionOnClick
-            getRowId={getRowId} // Specify the getRowId function
+            sx={{
+              '& .MuiDataGrid-root': {
+                fontSize: '1.5rem', 
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                fontSize: '1.9rem', 
+              },
+              '& .MuiDataGrid-cell': {
+                fontSize: '1.5rem', 
+              },
+            }}
+            
           />
         </div>
       </Box>

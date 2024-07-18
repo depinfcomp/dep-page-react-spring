@@ -4,38 +4,35 @@ import ListaPermisoDocente from "../component/ListaPermisoDocente";
 import { Container, Button, Box } from "@mui/material";
 
 const PermisosDocentesPage = () => {
-  const [activeTab, setActiveTab] = useState();
+  const [activeTab, setActiveTab] = useState(null);
 
   return (
     <>
       <Container sx={{ marginBottom: 5 }}>
         <Box
           display="flex"
-          justifyContent="center" // Center the buttons
+          justifyContent="center" 
           mb={2}
-          mt={4} // Add top margin
+          mt={4} 
         >
           <Button
             variant={activeTab === "solicitud" ? "contained" : "outlined"}
             onClick={() => setActiveTab("solicitud")}
-            sx={{ fontSize: "1.2rem", marginRight: 2 }} // Increase font size and add right margin
+            sx={{ fontSize: "1.2rem", marginRight: 2 }} 
           >
             Solicitar Permiso
           </Button>
           <Button
             variant={activeTab === "lista" ? "contained" : "outlined"}
             onClick={() => setActiveTab("lista")}
-            sx={{ fontSize: "1.2rem" }} // Increase font size
+            sx={{ fontSize: "1.2rem" }} 
           >
             Mis Permisos
           </Button>
         </Box>
 
-        {activeTab === "solicitud" ? (
-          <SolicitudPermiso />
-        ) : (
-          <ListaPermisoDocente />
-        )}
+        {activeTab === "solicitud" && <SolicitudPermiso />}
+        {activeTab === "lista" && <ListaPermisoDocente />}
       </Container>
     </>
   );

@@ -143,6 +143,7 @@ const AdminDoceTable = () => {
   const columns = [
     { field: "idDocente", headerName: "ID", width: 100 },
     { field: "nombre", headerName: "Nombre", width: 400 },
+    { field: "posicion", headerName: "Posicion", width: 400 },
     {
       field: "actions",
       headerName: "Acciones",
