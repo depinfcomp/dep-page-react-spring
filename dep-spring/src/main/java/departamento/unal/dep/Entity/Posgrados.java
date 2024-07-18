@@ -25,7 +25,7 @@ public class Posgrados {
     @Column(name = "Fecha_Inscripcion", nullable = false)
     private Date fechaInscripcion;
 
-    @Column(name = "Fecha_Inscripcion", nullable = false)
+    @Column(name = "Fecha_Cierre", nullable = false)
     private Date fechaCierre;
 
     @Column(name = "Contacto", nullable = false, length = 255)
