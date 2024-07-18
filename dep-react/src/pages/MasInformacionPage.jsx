@@ -32,7 +32,7 @@ const MasInformacionPage = ({ open, handleClose }) => {
     }
   
     try {
-      const response = await fetch('http://192.168.1.24/send-email', {
+      const response = await fetch('http://168.176.155.32/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const MasInformacionPage = ({ open, handleClose }) => {
       const data = await response.json();
       console.log('Correo enviado:', data);
       enqueueSnackbar('Información enviada con éxito', { variant: "success" });
-      handleClose(); // Cierra el modal después de enviar el correo
+      handleClose(); 
     } catch (err) {
       console.error('Error al enviar el correo:', err);
       enqueueSnackbar('Error al enviar el correo', { variant: "error" });

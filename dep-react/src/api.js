@@ -8,8 +8,8 @@ import axios from 'axios';
 //export const base = 'http://192.168.1.1:8092';
 //export const base = 'http://172.22.80.1:8092';
 //export const base = 'http://192.168.4.34';
-//export const base = 'http://168.176.155.32';
-export const base = 'http://192.168.1.24';
+export const base = 'http://168.176.155.32';
+//export const base = 'http://192.168.1.24';
 
 
 const api = axios.create({
