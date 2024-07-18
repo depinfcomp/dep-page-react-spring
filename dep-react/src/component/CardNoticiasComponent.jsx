@@ -1,12 +1,33 @@
-//import "../css/CardNoticias.css";
-/*CardNoticiasComponent*/
+import PropTypes from "prop-types";
+import { base } from "../api";
+import axios from "axios";
+import { useEffect, useState, useCallback } from "react";
+
 const CardNoticiasComponent = ({ imageSrc, title, buttonText, buttonLink }) => {
+  const consumir = base + "/upload/image/";
+  const [imagenVer, setImagenVer] = useState(null);
+
+  const handleFetchImage = useCallback(async () => {
+    try {
+      const response = await axios.get(consumir + imageSrc, {
+        responseType: "blob", // Fetch as a blob
+      });
+      const imagenURL = URL.createObjectURL(response.data);
+      setImagenVer(imagenURL);
+    } catch (error) {
+      console.error("Error fetching the image:", error);
+    }
+  }, [imageSrc, consumir]);
+
+  useEffect(() => {
+    handleFetchImage();
+  }, [handleFetchImage]);
+
   return (
     <>
-      
       <div className="wrapper">
         <div className="card">
-          <img src={imageSrc} alt="" />
+          {imagenVer && <img src={imagenVer} alt={title} />}
           <div className="info">
             <h1>{title}</h1>
             <a href={buttonLink} className="btn">
@@ -15,7 +36,7 @@ const CardNoticiasComponent = ({ imageSrc, title, buttonText, buttonLink }) => {
           </div>
         </div>
       </div>
-      
+
       <style>
         {`
           .wrapper {
@@ -104,5 +125,11 @@ const CardNoticiasComponent = ({ imageSrc, title, buttonText, buttonLink }) => {
   );
 };
 
+CardNoticiasComponent.propTypes = {
+  imageSrc: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  buttonLink: PropTypes.string.isRequired,
+};
 
 export default CardNoticiasComponent;

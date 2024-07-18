@@ -47,11 +47,6 @@ const EventosPage = () => {
 
   return (
     <>
-      <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
-        {/* <NavTopComponent />
-        <NavMidComponent /> */}
-      </div>
-
       <Container disableGutters >
         <Grid container alignItems="flex-start" >
           <Grid item xs={12} sm={12}>
