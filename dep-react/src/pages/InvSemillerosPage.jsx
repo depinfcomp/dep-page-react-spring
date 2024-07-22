@@ -1,55 +1,48 @@
-import NavMidComponent from "../component/NavMidComponent";
-import NavTopComponent from "../component/NavTopComponent";
 import "../css/sectionHeading.css";
 import { Container, Grid } from "@mui/material";
-import ResearchGroupCard from "../component/ResearchGroupCardSemillero";
+import ResearchGroupCard from "../component/ResearchGroupCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { base } from "../api";
 
 const InvSemillerosPage = () => {
-  const gruposDeInvestigacion = [
-    {
-      name: "Gestion De Contenidos En La Nube",
-      fullname: "Gestion De Contenidos En La Nube",
-      url: "",
-      grupolac:
-        "",
-      image: "",
-    },
-    {
-      name: "Gamificacion En La Enseñanza De Programacion",
-      fullname: "Gamificacion En La Enseñanza De Programacion",
-      url: "",
-      grupolac:
-        "",
-      image: "",
-    },
-    // {
-    //   name: "Programacion Competitiva",
-    //   fullname: "Programacion Competitiva",
-    //   url: "",
-    //   grupolac:
-    //     "",
-    //   image: "",
-    // },
-    {
-      name: "Riesgos En Proyectos De Universidades Publicas",
-      fullname: "Riesgos En Proyectos De Universidades Publicas",
-      url: "",
-      grupolac:
-        "",
-      image: "",
-    },
-  ];
+
+  const [gruposDeInvestigacion, setSortedCards] = useState([]);
+
+  useEffect(() => {
+    fetchInvestigacion();
+  }, []);
+
+  const fetchInvestigacion = async () => {
+    try {
+      const response = await axios.get(`${base}/api/investigacion/noAuth`);
+
+      const filteredCards = response.data.filter((card) => card.tipo === "SEMILLERO");
+
+      setSortedCards(filteredCards);
+    } catch (error) {
+      console.error("Error fetching SEMILLERO:", error);
+    }
+  };
+
   return (
     <>
-      {/* <NavTopComponent />
-      <NavMidComponent /> */}
       <div className="fcen-section-heading">
         <p style={{ fontSize: "60px" }}>Semilleros De Investigación</p>
       </div>
       <Container sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={2} justifyContent="center">
           {gruposDeInvestigacion.map((grupo, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={4} key={index} display="flex" justifyContent="center">
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={4}
+              key={index}
+              display="flex"
+              justifyContent="center"
+            >
               <ResearchGroupCard group={grupo} />
             </Grid>
           ))}

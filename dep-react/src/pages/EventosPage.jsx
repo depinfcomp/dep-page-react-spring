@@ -1,7 +1,5 @@
 /*EventosPage*/
 import EventosComponent from "../component/EventosComponent";
-import NavMidComponent from "../component/NavMidComponent";
-import NavTopComponent from "../component/NavTopComponent";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import "../css/sectionHeading.css";
@@ -42,8 +40,6 @@ const EventosPage = () => {
         console.error("Error fetching Noticas:", error);
     }
 };
-
-
 
   return (
     <>

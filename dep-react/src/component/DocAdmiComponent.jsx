@@ -1,9 +1,9 @@
 import CardCustom from "./CardCustom";
 import "./card.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import SearchBarComponent from "./SearchBarComponent";
 import { Container, Grid, Box, Modal, Typography, Button, Paper } from "@mui/material";
+import axios from "axios";
 import { base } from "../api";
 
 const docenteURL = base + "/api/docentes";

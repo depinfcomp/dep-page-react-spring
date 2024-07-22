@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface NoticiasEventosRepository extends JpaRepository<NoticiasEventos, Long>{
+    
     List<NoticiasEventos> findBytitulo(String titulo);
     NoticiasEventos findByidNoticiaEvento(Long idNoticiaEvento);
     boolean existsByTitulo(String titulo);

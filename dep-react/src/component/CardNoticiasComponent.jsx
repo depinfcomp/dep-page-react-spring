@@ -41,7 +41,7 @@ const CardNoticiasComponent = ({ imageSrc, title, buttonText, buttonLink }) => {
         {`
           .wrapper {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             width: 90%;
           }
           .card {
@@ -133,3 +133,4 @@ CardNoticiasComponent.propTypes = {
 };
 
 export default CardNoticiasComponent;
+

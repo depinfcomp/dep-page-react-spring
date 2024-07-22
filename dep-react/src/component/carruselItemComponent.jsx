@@ -11,7 +11,7 @@ function Item({ item }) {
   const handleFetchImage = async () => {
     try {
       const response = await axios.get(consumir + item.linkImagen, {
-        responseType: "blob", // Fetch as a blob
+        responseType: "blob", 
       });
       const imagenURL = URL.createObjectURL(response.data);
       setImagenVer(imagenURL); 
@@ -22,6 +22,8 @@ function Item({ item }) {
 
   useEffect(() => {
     handleFetchImage(); 
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item.linkImagen]);
 
   return (

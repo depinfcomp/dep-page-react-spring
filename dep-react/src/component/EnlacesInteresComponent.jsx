@@ -8,11 +8,11 @@ import {
   List,
   ListSubheader,
 } from "@mui/material";
-import MasInformacionPage from "../pages/MasInformacionPage"; // Importa el modal
+import MasInformacionPage from "../pages/MasInformacionPage"; 
 import { base } from "../api";
 
 const EnlacesInteresComponent = () => {
-  const baseURL = base; // Cambia esto a tu base URL
+  const baseURL = base;
 
   const [enlaces, setEnlaces] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);

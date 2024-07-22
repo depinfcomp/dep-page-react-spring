@@ -5,8 +5,6 @@ import {
     CardActionArea,
     CardMedia,
   } from "@mui/material";
-  import NavMidComponent from "../component/NavMidComponent";
-  import NavTopComponent from "../component/NavTopComponent";
   import "../css/sectionHeading.css";
   import "../css/investigacionPage.css";
   import { useNavigate } from "react-router-dom";
@@ -16,10 +14,6 @@ import {
   
     return (
       <>
-        <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
-          {/* <NavTopComponent />
-          <NavMidComponent /> */}
-        </div>
         <Container sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={4} lg={4} display="flex" justifyContent="center">

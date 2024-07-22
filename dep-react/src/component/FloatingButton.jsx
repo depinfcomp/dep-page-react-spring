@@ -21,7 +21,7 @@ const FloatingButton = () => {
           <FloatMenuItemButton
             icon={<FacebookIcon size="60%" />}
             buttonColor="#4f5bd5"
-            onClick={() => window.open('https://www.facebook.com', '_blank')}
+            onClick={() => window.open('https://www.facebook.com/profile.php?id=61559929650807&mibextid=qi2Omg', '_blank')}
           />
           <FloatMenuItemButton
             icon={<InstagramIcon size="20%" />}

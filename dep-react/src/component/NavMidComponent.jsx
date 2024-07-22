@@ -10,7 +10,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import SchoolIcon from "@mui/icons-material/School";
@@ -25,10 +24,12 @@ import LinkIcon from "@mui/icons-material/Link";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import AddCardIcon from '@mui/icons-material/AddCard';
 import { Box } from "@mui/system";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const NavMidComponent = ({ isAuthenticated, setIsAuthenticated }) => {
   const navLinks = [
     { title: "Inicio", path: "/", icon: <HomeIcon /> },
@@ -179,6 +180,39 @@ const NavMidComponent = ({ isAuthenticated, setIsAuthenticated }) => {
                 Admin Docentes
               </Button>
             )}
+            {isAuthenticated && userHasRole(["DIR", "AUX", "ADMIN"]) && (
+              <Button
+                color="inherit"
+                component="a"
+                href="/admi-investigacion"
+                startIcon={<AddCardIcon />}
+                sx={{ fontSize: 16, padding: "10px 20px" }}
+              >
+                Admin investigacion
+              </Button>
+            )}
+            {isAuthenticated && userHasRole(["DIR", "AUX", "ADMIN"]) && (
+              <Button
+                color="inherit"
+                component="a"
+                href="/admi-programas"
+                startIcon={<AddCardIcon />}
+                sx={{ fontSize: 16, padding: "10px 20px" }}
+              >
+                Admin Programas
+              </Button>
+            )}
+            {isAuthenticated && userHasRole(["DIR", "AUX", "ADMIN"]) && (
+              <Button
+                color="inherit"
+                component="a"
+                href="/admi-materialDidactico"
+                startIcon={<AddCardIcon />}
+                sx={{ fontSize: 16, padding: "10px 20px" }}
+              >
+                Admin Material
+              </Button>
+            )}
             {isAuthenticated && (
               <Button
                 color="inherit"
@@ -189,6 +223,7 @@ const NavMidComponent = ({ isAuthenticated, setIsAuthenticated }) => {
                 Cerrar sesión
               </Button>
             )}
+            
           </Box>
         </Toolbar>
       </AppBar>
@@ -237,6 +272,24 @@ const NavMidComponent = ({ isAuthenticated, setIsAuthenticated }) => {
             <ListItem button component="a" href="/DoceAdmin">
               <ListItemIcon><HowToRegIcon /></ListItemIcon>
               <ListItemText primary="Admin Docentes" />
+            </ListItem>
+          )}
+          {isAuthenticated && userHasRole(["DIR", "ADMIN", "AUX"]) && (
+            <ListItem button component="a" href="/admi-investigacion">
+              <ListItemIcon><AddCardIcon /></ListItemIcon>
+              <ListItemText primary="Admin Investigacion" />
+            </ListItem>
+          )}
+          {isAuthenticated && userHasRole(["DIR", "ADMIN", "AUX"]) && (
+            <ListItem button component="a" href="/admi-programas">
+              <ListItemIcon><AddCardIcon /></ListItemIcon>
+              <ListItemText primary="Admin Programas" />
+            </ListItem>
+          )}
+          {isAuthenticated && userHasRole(["DIR", "ADMIN", "AUX"]) && (
+            <ListItem button component="a" href="/admi-materialDidactico">
+              <ListItemIcon><AddCardIcon /></ListItemIcon>
+              <ListItemText primary="Admin Material" />
             </ListItem>
           )}
           {isAuthenticated && (

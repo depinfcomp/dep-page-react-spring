@@ -14,7 +14,7 @@ import Semilleros from "./pages/InvSemillerosPage.jsx";
 import Laboratorios from "./pages/InvLaboratoriosPage.jsx";
 import PermisosDocentesPage from "./pages/PermisosDocentesPage.jsx";
 import GestionPermisosPage from "./pages/GestionPermisosPage.jsx";
-import EduContinuaPage from "./pages/MaterialDidactico.jsx";
+import MaterialDidactico from "./pages/MaterialDidactico.jsx";
 import NotiEvebAdmin from "./pages/NotiEvenAdminPage.jsx";
 import SobreDepPage from "./pages/SobreDepPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -34,6 +34,9 @@ import avatarImage from "./assets/imagenes/avatar.jpg";
 import MasInformacionPage from "./pages/MasInformacionPage.jsx";
 import FloatingButton from "./component/FloatingButton.jsx";
 import PruebaImagen from "./pages/PruebaImagen.jsx";
+import AdmiInvestigacionPage from "./pages/AdmiInvestigacionPage.jsx";
+import AdminProgramasPage from "./pages/AdminProgramasPage.jsx";
+import AdminMaterialDidacticopage from "./pages/AdminMaterialDidacticoPage.jsx";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,6 +55,7 @@ function App() {
     "/perfil",
     "/enlaces-interes",
     "/DoceAdmin",
+    "/admi-investigacion"
   ];
 
   return (
@@ -69,10 +73,12 @@ function App() {
         <Route path="/programas" element={<ProgramasPage />} />
         <Route path="/eventos" element={<EventosPage />} />
         <Route path="/investigacion" element={<InvestigacionPage />} />
+        
         <Route path="/grupos" element={<Grupos />} />
         <Route path="/semilleros" element={<Semilleros />} />
         <Route path="/laboratorios" element={<Laboratorios />} />
-        <Route path="/educacion-continua" element={<EduContinuaPage />} />
+        
+        <Route path="/MaterialDidactico" element={<MaterialDidactico />} />
         <Route path="/sobre-departamento" element={<SobreDepPage />} />
         <Route path="/ADSI" element={<GeneralInfo />} />
         <Route path="/posgrados" element={<PosgradosPage />} />
@@ -134,6 +140,30 @@ function App() {
           element={
             <ProtectedRoute roleAllowed={["DIR", "ADMIN", "AUX"]}>
               <EnlacesInteresPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admi-investigacion"
+          element={
+            <ProtectedRoute roleAllowed={["DIR", "ADMIN", "AUX"]}>
+              <AdmiInvestigacionPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admi-programas"
+          element={
+            <ProtectedRoute roleAllowed={["DIR", "ADMIN", "AUX"]}>
+              <AdminProgramasPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admi-materialDidactico"
+          element={
+            <ProtectedRoute roleAllowed={["DIR", "ADMIN", "AUX"]}>
+              <AdminMaterialDidacticopage />
             </ProtectedRoute>
           }
         />

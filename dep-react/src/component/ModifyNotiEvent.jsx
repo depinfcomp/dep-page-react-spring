@@ -38,7 +38,8 @@ const ModifyNotiEvent = ({ open, handleClose, data, handleSave }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && !file.type.startsWith("image/")) {
-      enqueueSnackbar("Solo se permiten archivos de imagen.", { variant: "error" });
+      enqueueSnackbar("Solo se permiten archivos de imagen.", { 
+        variant: "error" });
       setSelectedFile(null);
       return;
     }

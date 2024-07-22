@@ -2,9 +2,11 @@ package departamento.unal.dep.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+
 import departamento.unal.dep.Entity.EnlacesInteres;
 import departamento.unal.dep.Services.EnlacesInteresServices;
-import lombok.RequiredArgsConstructor;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -17,8 +19,6 @@ public class EnlacesInteresController {
 
     @Autowired
     private final EnlacesInteresServices enlacesInteresServices;
-
-    
 
     @GetMapping
     public List<EnlacesInteres> getAllEnlacesInteres() {
