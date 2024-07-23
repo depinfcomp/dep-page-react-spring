@@ -42,7 +42,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/materialDidactico/noAuth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/upload/**").permitAll()
                         .requestMatchers("/user/docente").authenticated()
-                        .requestMatchers("/user/dir/**").hasAuthority("DIR")
+                        .requestMatchers("/user/dir/**").hasAnyAuthority("DIR", "ADMIN")
+
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

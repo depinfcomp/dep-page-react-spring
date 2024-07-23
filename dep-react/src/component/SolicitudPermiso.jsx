@@ -138,7 +138,7 @@ const SolicitudPermiso = () => {
       name: selectedDocente.nombre,
       email: selectedDocente.correo,
       message: descripcion,
-      copy_to: `${selectedDocente.correo},${currentDirector.correo}`,
+      copy_to: `${selectedDocente.correo},${currentDirector.correo},"depinfcomp_man@unal.edu.co"`,
       estado: "Proceso",
     };
 
